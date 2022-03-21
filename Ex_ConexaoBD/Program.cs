@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * Pacotes Necessários para conexão com BD
+ * Na Solução, clicar com o botão direito do mouse, escolher Gerenciar NuGet Packages e instalar:
+ * Microsoft.Extensions.Configuration;
+ * Microsoft.Extensions.Configuration.FileExtensions;
+ * Microsoft.Extensions.Configuration.Json;
+ * System.Data.SqlClient.
+*/
+
+
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
