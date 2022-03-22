@@ -7,6 +7,7 @@
  * System.Data.SqlClient.
 */
 
+// 22/03/2022 - Adicionado exemplo de INSERT
 
 using System;
 using System.Data;
@@ -34,6 +35,9 @@ namespace Ex_ConexaoBD
 
                 using (connection)
                 {
+                    //Exemplo de Comando SQL - INSERT
+                    Comando_SQL_INSERCAO(connection);
+
                     // Exemplo de Comando SQL
                     Comando_SQL(connection);
 
@@ -48,6 +52,33 @@ namespace Ex_ConexaoBD
             }
             Console.WriteLine("\nFIM\n\nPressone qualquer tecla para finalizar");
             Console.ReadLine();
+        }
+
+        public static void Comando_SQL_INSERCAO(SqlConnection connection)
+        {
+            Console.WriteLine("\nExemplo de Inserção, com outra forma de preparação dos comandos:");
+
+            connection.Open();
+            SqlCommand command = new SqlCommand(null, connection);
+
+            // Cria e preapara a estrutura do Comando SQL.
+            command.CommandText =
+                "INSERT INTO Aluno (ra, nome) " +
+                "VALUES (@ra, @nome)";
+            SqlParameter idParam = new SqlParameter("@ra", SqlDbType.Int, 0);
+            SqlParameter descParam = new SqlParameter("@nome", SqlDbType.Text, 50);
+            Console.WriteLine("Informe o RA do aluno (Registro Acadêmico): ");
+            idParam.Value = Console.ReadLine();
+            Console.WriteLine("Informe o nome do aluno: ");
+            descParam.Value = Console.ReadLine();
+            command.Parameters.Add(idParam);
+            command.Parameters.Add(descParam);
+
+            // Executa primeiro a preparação do comando após fazer as configurações do mesmo.
+            command.Prepare();
+            command.ExecuteNonQuery();
+
+            connection.Close();
         }
 
         public static void Call_SP(SqlConnection connection)
